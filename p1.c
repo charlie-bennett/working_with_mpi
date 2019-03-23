@@ -19,25 +19,21 @@ int main(int argc, char** argv)
 		{
 			MSG = 451;
 			printf("Process %d: Initially Message = %d", rank, MSG);
-			MSG_buffer = &MSG;
-			MPI_send(MSG_buffer, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
+			MPI_send(&MSG, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
 		}
 		else
 		{
-			MPI_Recv(MSG_buffer, 1, MPI_INT, 3, 3, MPI_COMM_WORLD);
-			MSG = (int) (*MSG_buffer);
+			MPI_Recv(&MSG, 1, MPI_INT, 3, 3, MPI_COMM_WORLD);
 			printf("Process %d: Recieved Message = %d Done!", rank, MSG)
 		}
 	}
 
 	else
 	{
-		MPI_Recv(MSG_buffer, 1, MPI_INT, (rank - 1), (rank - 1), MPI_COMM_WORLD);
-		MSG = (int) (*MSG_buffer);
+		MPI_Recv(&MSG, 1, MPI_INT, (rank - 1), (rank - 1), MPI_COMM_WORLD);
 		MSG++;
 		printf("Process %d: Message = %d", rank, MSG);
-		MSG_buffer = &MSG;
-		MPI_send(MSG_buffer, 1, MPI_INT, (rank + 1), rank, MPI_COMM_WORLD);
+		MPI_send(&MSG, 1, MPI_INT, (rank + 1), rank, MPI_COMM_WORLD);
 	}
 
 
