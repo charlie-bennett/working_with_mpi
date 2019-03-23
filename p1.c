@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 		else
 		{
 			MPI_Recv(&MSG, 1, MPI_INT, 3, 3, MPI_COMM_WORLD);
-			printf("Process %d: Recieved Message = %d Done!", rank, MSG)
+			printf("Process %d: Recieved Message = %d Done!", rank, MSG);
 		}
 	}
 
