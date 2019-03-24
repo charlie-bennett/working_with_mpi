@@ -56,6 +56,7 @@ int main(int argc, char** argv)
 			MPI_Recv(&runsum_buff, 1, MPI_INT, i, i, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 			runsum += runsum_buff;
 		}
+		fprintf("Sum is %d", runsum);
 	}
 	else
 	{
