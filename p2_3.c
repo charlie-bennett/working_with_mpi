@@ -30,14 +30,14 @@ int main(int argc, char** argv)
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	int MSG, dest, runsum_buff, flag = 0;
+	int MSG, dest, flag = 0;
 	int output[size];
 	int buffer_in[buffer_size / size];
 
 
 
 	int buffer[buffer_size];
-	int runsum;
+	int long runsum, runsum_buff;
 	int start_index = (rank) * (buffer_size / size);
 	int end_index = start_index + (buffer_size / size);
 
@@ -62,7 +62,7 @@ int main(int argc, char** argv)
 
 
 
-	MPI_Gather(&runsum, 1, MPI_INT, output, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Gather(&runsum, 1, MPI_LONG, output, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
 	runsum_buff = 0;
 
