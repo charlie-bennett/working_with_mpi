@@ -44,12 +44,12 @@ int main(int argc, char** argv)
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	int MSG, dest, runsum_buff, flag = 0;
+	int MSG, dest, flag = 0;
 
 
 
 	int buffer[buffer_size];
-	int runsum;
+	int long runsum, runsum_buff;
 	int start_index = (rank) * (buffer_size / size);
 	int end_index = start_index + (buffer_size / size);
 
@@ -71,7 +71,7 @@ int main(int argc, char** argv)
 
 		for (i = 1; i < size + 1; i++)
 		{
-			MPI_Recv(&runsum_buff, 1, MPI_INT, i, i, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+			MPI_Recv(&runsum_buff, 1, MPI_LONG, i, i, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 			runsum += runsum_buff;
 			printf("we are at this i = %d", i);
 		}
@@ -82,7 +82,7 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		MPI_Send(&runsum, 1, MPI_INT, 0, rank, MPI_COMM_WORLD);
+		MPI_Send(&runsum, 1, MPI_LONG, 0, rank, MPI_COMM_WORLD);
 	}
 
 
