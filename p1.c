@@ -16,17 +16,18 @@ int main(int argc, char** argv)
 
 	if (rank == 0 && count == 0)
 	{
-		if (!flag)
+		if (flag == 0)
 		{
 			MSG = 451;
 			printf("Process %d: Initially Message = %d \n", rank, MSG);
 			MPI_Send(&MSG, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
-			flag = 1;
+
 		}
 		else
 		{
 			MPI_Recv(&MSG, 1, MPI_INT, 3, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 			printf("Process %d: Recieved Message = %d Done! \n", rank, MSG);
+			return 0;
 		}
 		count++;
 
@@ -37,9 +38,20 @@ int main(int argc, char** argv)
 		MPI_Recv(&MSG, 1, MPI_INT, (rank - 1), (rank - 1), MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 		MSG++;
 		printf("Process %d: Message = %d \n", rank, MSG);
-		dest = (rank == 3) ? 0 : (rank + 1);
+		if (rank == 3)
+		{
+			count = 0;
+			dest = 0;
+			flag = 1;
+		}
+		else
+		{
+			dest = (rank + 1);
+			count++;
+		}
+
 		MPI_Send(&MSG, 1, MPI_INT, dest, rank, MPI_COMM_WORLD);
-		count = (count == 3) ? 0 : count + 1;
+
 	}
 
 
