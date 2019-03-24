@@ -8,8 +8,12 @@
 
 int read_file(int* buffer)
 {
-	FILE* my_file;
-	my_file = fopen("number.txt", "r");
+	MPI_File my_file;
+	MPI_Status status;
+	int rc = MPI_File_open(MPI_COMM_WORLD, "number.txt", MPI_MODE_RDONLY, MPI_INFO_NULL, &my_file);
+	rc = MPI_File_read(my_file, buffer, buffer_size, MPI_INT, &status);
+
+	/*
 	if (my_file == NULL) {return 1;}
 	int index = 0;
 	fscanf(my_file, "%d", (buffer + index));
@@ -20,6 +24,7 @@ int read_file(int* buffer)
 	}
 	fclose(my_file);
 	return 0;
+	*/
 }
 
 int main(int argc, char** argv)
@@ -38,10 +43,11 @@ int main(int argc, char** argv)
 	int start_index = (rank) * (buffer_size / size);
 	int end_index = start_index + (buffer_size / size);
 
-	if (read_file(buffer))
+	if (read_file)
 	{
-		printf("issue");
-	}
+		while (fopen("number.txt", "r"))
+		}
+
 
 
 	for (i = start_index; i < end_index; i++)
