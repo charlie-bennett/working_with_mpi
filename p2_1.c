@@ -45,39 +45,38 @@ int main(int argc, char** argv)
 
 	if (read_file)
 	{
-		while (fopen("number.txt", "r"))
-		}
+		read_file(buffer);
 
 
 
-	for (i = start_index; i < end_index; i++)
-	{
-		runsum = runsum + buffer[i];
-	}
-
-
-	if (rank == 0)
-	{
-
-
-		for (i = 1; i < 4; i++)
+		for (i = start_index; i < end_index; i++)
 		{
-			MPI_Recv(&runsum_buff, 1, MPI_INT, i, i, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-			runsum += runsum_buff;
+			runsum = runsum + buffer[i];
 		}
-		printf("Sum is %d", runsum);
+
+
+		if (rank == 0)
+		{
+
+
+			for (i = 1; i < 4; i++)
+			{
+				MPI_Recv(&runsum_buff, 1, MPI_INT, i, i, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+				runsum += runsum_buff;
+			}
+			printf("Sum is %d", runsum);
+		}
+		else
+		{
+			MPI_Send(&runsum, 1, MPI_INT, 0, rank, MPI_COMM_WORLD);
+		}
+
+
+
+
+
+
+
+		MPI_Finalize();
+		return 0;
 	}
-	else
-	{
-		MPI_Send(&runsum, 1, MPI_INT, 0, rank, MPI_COMM_WORLD);
-	}
-
-
-
-
-
-
-
-	MPI_Finalize();
-	return 0;
-}
