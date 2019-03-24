@@ -20,9 +20,11 @@ int main(int argc, char** argv)
 		MSG = 451;
 		printf("Process %d: Initially Message = %d \n", rank, MSG);
 		MPI_Send(&MSG, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
-
-		MPI_Recv(&MSG, 1, MPI_INT, 3, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-		printf("Process %d: Recieved Message = %d Done! \n", rank, MSG);
+		if (flag)
+		{
+			MPI_Recv(&MSG, 1, MPI_INT, 3, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+			printf("Process %d: Recieved Message = %d Done! \n", rank, MSG);
+		}
 
 
 
@@ -34,8 +36,8 @@ int main(int argc, char** argv)
 		MSG++;
 		printf("Process %d: Message = %d \n", rank, MSG);
 		dest = (rank == 3) ? 0 : (rank + 1);
-
 		MPI_Send(&MSG, 1, MPI_INT, dest, rank, MPI_COMM_WORLD);
+		flag == 1;
 
 	}
 
