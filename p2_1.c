@@ -6,7 +6,7 @@
 
 //Problem 2.1
 
-int read_file(int buffer)
+int read_file(int* buffer)
 {
 	FILE* my_file;
 	my_file = fopen("number.txt", "r");
@@ -16,7 +16,7 @@ int read_file(int buffer)
 	while ((!(feof(my_file))) && index < buffer_size)
 	{
 		index++;
-		fscanf(my_file, "%d", (buffer + index);
+		fscanf(my_file, "%d", (buffer + index));
 	}
 	fclose(my_file);
 	return 0;
