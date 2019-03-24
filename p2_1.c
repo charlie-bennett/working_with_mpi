@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
-#define buffer_size 8;
+#define buffer_size 8
 
 
 //Problem 2.1
