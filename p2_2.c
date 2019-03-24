@@ -17,7 +17,7 @@ int read_file(int* buffer)
 	{
 		index++;
 		fscanf(my_file, "%d", (buffer + index));
-		print
+
 	}
 	fclose(my_file);
 
@@ -31,12 +31,13 @@ int main(int argc, char** argv)
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	int MSG, dest, runsum_buff, flag = 0;
+	int MSG, dest, flag = 0;
+	int long runsum, runsum_buff;
 
 
 
 	int buffer[buffer_size];
-	int runsum;
+
 	int start_index = (rank) * (buffer_size / size);
 	int end_index = start_index + (buffer_size / size);
 
@@ -58,7 +59,7 @@ int main(int argc, char** argv)
 		runsum = runsum + buffer[i];
 	}
 
-	MPI_Reduce(&runsum, &runsum_buff, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+	MPI_Reduce(&runsum, &runsum_buff, 1, MPI_LONG, MPI_SUM, 0, MPI_COMM_WORLD);
 
 	if (rank == 0)
 	{
