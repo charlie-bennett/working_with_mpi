@@ -13,7 +13,7 @@ int read_file(int* buffer)
 	if (my_file == NULL) {return 1;}
 	int index = 0;
 	fscanf(my_file, "%d", (buffer + index));
-	while ((!(feof(my_file))) && index < buffer_size)
+	while ((!(feof(my_file))) && index < (buffer_size - 1))
 	{
 		index++;
 		fscanf(my_file, "%d", (buffer + index));
