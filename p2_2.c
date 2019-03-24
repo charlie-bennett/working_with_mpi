@@ -42,20 +42,15 @@ int main(int argc, char** argv)
 
 
 
-
-
-
-
-
 	if (rank == 0)
 	{
 
 		read_file(buffer);
-		MPI_Bcast(buffer, buffer_size, MPI_INT, 0, MPI_COMM_WORLD);
-
-		runsum += runsum_buff;
-		printf("Sum is %d \n", runsum);
 	}
+	MPI_Bcast(buffer, buffer_size, MPI_INT, 0, MPI_COMM_WORLD);
+
+
+
 
 	for (i = start_index; i < end_index; i++)
 	{
@@ -66,7 +61,7 @@ int main(int argc, char** argv)
 
 	if (rank == 0)
 	{
-		fprint("The sum is ", runsum_buff);
+		printf("The sum is ", runsum_buff);
 	}
 
 
