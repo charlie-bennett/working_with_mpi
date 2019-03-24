@@ -6,7 +6,7 @@
 
 //Problem 2.1
 
-void read_file(int buffer)
+int read_file(int buffer)
 {
 	FILE* my_file;
 	my_file = fopen("number.txt", "r");
@@ -19,6 +19,7 @@ void read_file(int buffer)
 		fscanf(my_file, "%d", (buffer + index);
 	}
 	fclose(my_file);
+	return 0;
 }
 
 int main(int argc, char** argv)
