@@ -50,14 +50,14 @@ int main(int argc, char** argv)
 		read_file(buffer);
 	}
 
-	MPI_Scatter(buffer, (buffer_size / size), MPI_INT, buffer_in, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Scatter(buffer, (buffer_size / size), MPI_INT, buffer_in, (buffer_size / size), MPI_INT, 0, MPI_COMM_WORLD);
 
 
 
 
-	for (i = start_index; i < end_index; i++)
+	for (i = 0; i < (buffer_size / size); i++)
 	{
-		runsum = runsum + buffer[i];
+		runsum = runsum + buffer_in[i];
 	}
 
 

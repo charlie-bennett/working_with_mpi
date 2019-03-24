@@ -44,7 +44,21 @@ Process 1: Message = 452
 
 Part 2 Output
 
-
+---------- Begin SLURM Prolog ----------
+Job ID:        2949322
+Username:      cfbennet
+Accountname:   lc_xq
+Name:          run
+Partition:     quick
+Nodelist:      hpc3966
+TasksPerNode:  4
+CPUsPerTask:   Default[1]
+TMPDIR:        /tmp/2949322.quick
+SCRATCHDIR:    /staging/scratch/2949322
+Cluster:       uschpc
+HSDA Account:  false
+---------- 2019-03-23 22:13:58 ---------
+Sum is 58537 
 
 
 

@@ -32,7 +32,7 @@ int read_file(int* buffer)
 
 
 
-	MPI_File_close(&my_file);
+
 
 	return 0;
 }
@@ -69,11 +69,10 @@ int main(int argc, char** argv)
 
 
 
-		for (i = 1; i < size + 1; i++)
+		for (i = 1; i < size; i++)
 		{
 			MPI_Recv(&runsum_buff, 1, MPI_LONG, i, i, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 			runsum += runsum_buff;
-			printf("we are at this i = %d", i);
 		}
 
 
