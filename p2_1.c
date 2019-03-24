@@ -45,40 +45,39 @@ int main(int argc, char** argv)
 	int end_index = start_index + (buffer_size / size);
 
 
-	if (read_file)
+
+
+
+
+	for (i = start_index; i < end_index; i++)
 	{
-		//read_file(buffer);
-
-
-
-		for (i = start_index; i < end_index; i++)
-		{
-			runsum = runsum + buffer[i];
-		}
-
-
-		if (rank == 0)
-		{
-
-
-			for (i = 1; i < 4; i++)
-			{
-				MPI_Recv(&runsum_buff, 1, MPI_INT, i, i, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-				runsum += runsum_buff;
-			}
-			printf("Sum is %d", runsum);
-		}
-		else
-		{
-			MPI_Send(&runsum, 1, MPI_INT, 0, rank, MPI_COMM_WORLD);
-		}
-
-
-
-
-
-
-
-		MPI_Finalize();
-		return 0;
+		runsum = runsum + buffer[i];
 	}
+
+
+	if (rank == 0)
+	{
+
+
+		for (i = 1; i < 4; i++)
+		{
+			MPI_Recv(&runsum_buff, 1, MPI_INT, i, i, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+			runsum += runsum_buff;
+			printf("we are at this i = %d", i);
+		}
+		printf("Sum is %d", runsum);
+	}
+	else
+	{
+		MPI_Send(&runsum, 1, MPI_INT, 0, rank, MPI_COMM_WORLD);
+	}
+
+
+
+
+
+
+
+	MPI_Finalize();
+	return 0;
+}
