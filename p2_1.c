@@ -59,12 +59,16 @@ int main(int argc, char** argv)
 	{
 
 
+		/*
 		for (i = 1; i < 4; i++)
 		{
 			MPI_Recv(&runsum_buff, 1, MPI_INT, i, i, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 			runsum += runsum_buff;
 			printf("we are at this i = %d", i);
 		}
+		*/
+		MPI_Recv(&runsum_buff, 1, MPI_INT, 1, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+		runsum += runsum_buff;
 		printf("Sum is %d", runsum);
 	}
 	else
