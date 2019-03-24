@@ -1,17 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
-#define buffer_size 8
+#define buffer_size 64
 
 
 //Problem 2.1
 
 int read_file(int* buffer)
 {
+
 	MPI_File my_file;
 	MPI_Status status;
 	int rc = MPI_File_open(MPI_COMM_WORLD, "number.txt", MPI_MODE_RDONLY, MPI_INFO_NULL, &my_file);
+	fprintf("rc is %d \n", rc);
 	rc = MPI_File_read(my_file, buffer, buffer_size, MPI_INT, &status);
+	fprintf("rc is %d \n", rc);
 
 	/*
 	if (my_file == NULL) {return 1;}
@@ -37,15 +40,15 @@ int main(int argc, char** argv)
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	int MSG, dest, runsum_buff, flag = 0;
 
-	//int count = 0;
 
-	int buffer[buffer_size] = {1, 2, 3, 4, 5, 6, 7, 8};
+
+	int buffer[buffer_size];
 	int runsum;
 	int start_index = (rank) * (buffer_size / size);
 	int end_index = start_index + (buffer_size / size);
 
 
-
+	read_file(buffer);
 
 
 
@@ -69,9 +72,9 @@ int main(int argc, char** argv)
 		*/
 		MPI_Recv(&runsum_buff, 1, MPI_INT, 1, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 		runsum += runsum_buff;
-		printf("Sum is %d", runsum);
+		printf("Sum is %d \n", runsum);
 	}
-	else
+	else if (rank == 1)
 	{
 		MPI_Send(&runsum, 1, MPI_INT, 0, rank, MPI_COMM_WORLD);
 	}
