@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
-#define buffer_size 64
+#define buffer_size 8;
 
 
 //Problem 2.1
@@ -25,6 +25,7 @@ int read_file(int* buffer)
 	fclose(my_file);
 	return 0;
 	*/
+	return 0;
 }
 
 int main(int argc, char** argv)
@@ -38,14 +39,15 @@ int main(int argc, char** argv)
 
 	//int count = 0;
 
-	int buffer[buffer_size];
+	int buffer[buffer_size] = {1, 2, 3, 4, 5, 6, 7, 8};
 	int runsum;
 	int start_index = (rank) * (buffer_size / size);
 	int end_index = start_index + (buffer_size / size);
 
+
 	if (read_file)
 	{
-		read_file(buffer);
+		//read_file(buffer);
 
 
 
