@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 		MPI_Send(&MSG, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
 		if (flag)
 		{
-			MPI_Recv(&MSG, 1, MPI_INT, 3, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+			//MPI_Recv(&MSG, 1, MPI_INT, 3, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 			printf("Process %d: Recieved Message = %d Done! \n", rank, MSG);
 		}
 
