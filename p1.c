@@ -13,11 +13,11 @@ int main(int argc, char** argv)
 	int MSG, dest, flag = 0;
 	//int count = 0;
 	void* MSG_buffer;
-	int q, i;
+	int q, i, old_q;
 	int recieve_from, send_to;
 	MSG = 0;
 
-	for (q = 0; q < size; q++)
+	for (q = 1; q < size; q++)
 	{
 		for (i = 0; i < size; i++)
 		{
@@ -32,10 +32,17 @@ int main(int argc, char** argv)
 				send_to = ((i + q) % size);
 				if (i == 0)
 				{
+					if (old_q < q)
+					{
+						recieve_from = 8 - old_q;
+						MPI_Recv(&MSG, 1, MPI_INT, recieve_from, recieve_from, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+						printf("Process %d: Recieved Message = %d Done! \n", rank, MSG);
+					}
+
 					printf("Process %d: Initially Message = %d \n", rank, MSG);
 					MPI_Send(&MSG, 1, MPI_INT, send_to, rank, MPI_COMM_WORLD);
-					MPI_Recv(&MSG, 1, MPI_INT, recieve_from, recieve_from, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-					printf("Process %d: Recieved Message = %d Done! \n", rank, MSG);
+					old_q = q;
+
 				}
 				else
 				{
