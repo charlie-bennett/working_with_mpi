@@ -13,37 +13,46 @@ int main(int argc, char** argv)
 	int MSG, dest, flag = 0;
 	//int count = 0;
 	void* MSG_buffer;
+	int q, i;
+	int recieve_from, send_tp;
+	MSG = 0;
 
-	if (rank == 0)
+	for (q = 0; q < size; q++)
 	{
-
-		MSG = 451;
-		printf("Process %d: Initially Message = %d \n", rank, MSG);
-		MPI_Send(&MSG, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
-		if (flag)
+		for (i = 0; i < size; i++)
 		{
-			//MPI_Recv(&MSG, 1, MPI_INT, 3, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-			printf("Process %d: Recieved Message = %d Done! \n", rank, MSG);
+			if (rank == i)
+			{
+				printf("Process %d: Initially Message = %d \n", rank, MSG);
+				recieve_from = i - q;
+				if (q < 0)
+				{
+					recieve_from = recieve_from + size;
+				}
+				send_to = ((i + q) % size);
+				if (i == 0)
+				{
+					printf("Process %d: Initially Message = %d \n", rank, MSG);
+					MPI_Send(&MSG, 1, MPI_INT, send_to, rank, MPI_COMM_WORLD);
+					MPI_Recv(&MSG, 1, MPI_INT, recieve_from, recieve_from, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+					printf("Process %d: Recieved Message = %d Done! \n", rank, MSG);
+				}
+				else
+				{
+					MPI_Recv(&MSG, 1, MPI_INT, recieve_from, recieve_from, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+					MSG++;
+					printf("Process %d: Recieved Message = %d Done! \n", rank, MSG);
+					MPI_Send(&MSG, 1, MPI_INT, send_to, rank, MPI_COMM_WORLD);
+				}
+
+			}
 		}
 
 
 
+
+
+
+		MPI_Finalize();
+		return 0;
 	}
-
-	else
-	{
-		MPI_Recv(&MSG, 1, MPI_INT, (rank - 1), (rank - 1), MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-		MSG++;
-		printf("Process %d: Message = %d \n", rank, MSG);
-		dest = (rank == 3) ? 0 : (rank + 1);
-		MPI_Send(&MSG, 1, MPI_INT, dest, rank, MPI_COMM_WORLD);
-		flag == 1;
-
-	}
-
-
-
-
-	MPI_Finalize();
-	return 0;
-}

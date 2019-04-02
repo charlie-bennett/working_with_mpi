@@ -31,7 +31,7 @@ int main(int argc, char** argv)
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	int MSG, dest, flag = 0;
-	int output[size];
+	int long output[size];
 	int buffer_in[buffer_size / size];
 
 
@@ -62,18 +62,21 @@ int main(int argc, char** argv)
 
 
 
-	MPI_Gather(&runsum, 1, MPI_LONG, output, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Gather(&runsum, 1, MPI_LONG, output, 1, MPI_LONG, 0, MPI_COMM_WORLD);
 
 	runsum_buff = 0;
 
 
-	for (i = 0; i < size; i++)
-	{
-		runsum_buff = runsum_buff + output[i];
-	}
+
 
 	if (rank == 0)
 	{
+
+		for (i = 0; i < size; i++)
+		{
+
+			runsum_buff = runsum_buff + output[i];
+		}
 		printf("The sum is ", runsum_buff);
 	}
 
