@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 	//int count = 0;
 	void* MSG_buffer;
 	int q, i;
-	int recieve_from, send_tp;
+	int recieve_from, send_to;
 	MSG = 0;
 
 	for (q = 0; q < size; q++)
@@ -47,12 +47,13 @@ int main(int argc, char** argv)
 
 			}
 		}
-
-
-
-
-
-
-		MPI_Finalize();
-		return 0;
 	}
+
+
+
+
+
+
+	MPI_Finalize();
+	return 0;
+}
